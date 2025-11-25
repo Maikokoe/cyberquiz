@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="CyberSec Quiz">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect fill='%236366f1' width='192' height='192'/><text x='96' y='120' font-size='120' font-weight='bold' fill='white' text-anchor='middle' font-family='sans-serif'>🔐</text></svg>">
+    <title>Cyber Security Quiz</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <div class="app">
+        <div id="homeScreen" class="screen active">
+            <div class="home-container">
+                <h1 class="title">🔐 CyberSec Quiz</h1>
+                <p class="subtitle">Master Cyber Security Concepts</p>
+                <div class="home-content">
+                    <input type="text" id="userName" placeholder="Your Name" class="input-field">
+                    <input type="email" id="userEmail" placeholder="Your Email" class="input-field">
+                    <div class="button-group">
+                        <button onclick="goToCategories()" class="btn btn-primary">Start Quiz</button>
+                        <button onclick="goToLeaderboard()" class="btn btn-secondary">Leaderboard</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="categoriesScreen" class="screen">
+            <div class="top-bar">
+                <button onclick="goHome()" class="btn-back">← Back</button>
+                <h2>Select Category</h2>
+                <div></div>
+            </div>
+            <div class="categories-grid" id="categoriesGrid"></div>
+        </div>
+
+        <div id="quizScreen" class="screen">
+            <div class="quiz-header">
+                <button onclick="goToCategories()" class="btn-back">← Back</button>
+                <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                <div class="timer" id="timer">00:00</div>
+            </div>
+            <div class="quiz-container">
+                <div class="question-card">
+                    <div class="question-info">
+                        <span class="question-number" id="questionNumber">1/10</span>
+                        <span class="difficulty" id="difficultyBadge">Easy</span>
+                    </div>
+                    <h3 id="questionText" class="question-text"></h3>
+                    <div class="options" id="optionsContainer"></div>
+                    <div class="button-group">
+                        <button onclick="prevQuestion()" class="btn btn-secondary" id="prevBtn" disabled>Previous</button>
+                        <button onclick="nextQuestion()" class="btn btn-primary" id="nextBtn">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="resultsScreen" class="screen">
+            <div class="results-container">
+                <h2>Quiz Complete! 🎉</h2>
+                <div class="score-box">
+                    <div class="score-circle"><div class="percentage" id="scorePercentage">85%</div></div>
+                    <p class="score-text"><span id="scoreDisplay">17</span>/<span id="totalDisplay">20</span> Correct</p>
+                </div>
+                <div class="results-details">
+                    <div class="detail-item"><span class="label">Category:</span><span class="value" id="resultCategory">Network Security</span></div>
+                    <div class="detail-item"><span class="label">Time Taken:</span><span class="value" id="resultTime">5:30</span></div>
+                </div>
+                <div class="detailed-results" id="detailedResults"></div>
+                <div class="button-group">
+                    <button onclick="goHome()" class="btn btn-primary">Home</button>
+                    <button onclick="goToCategories()" class="btn btn-secondary">Try Another</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="leaderboardScreen" class="screen">
+            <div class="top-bar">
+                <button onclick="goHome()" class="btn-back">← Back</button>
+                <h2>Leaderboard</h2>
+                <div></div>
+            </div>
+            <div class="leaderboard-container">
+                <table class="leaderboard-table">
+                    <thead><tr><th>Rank</th><th>Name</th><th>Avg Score</th><th>Quizzes</th></tr></thead>
+                    <tbody id="leaderboardBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('service-worker.js')
+                    .then(reg => console.log('Service Worker registered'))
+                    .catch(err => console.log('Service Worker registration failed:', err));
+            });
+        }
+    </script>
+</body>
+</html>
