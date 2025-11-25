@@ -132,3 +132,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('userName').addEventListener('keypress', e => { if (e.key === 'Enter') goToCategories(); });
     document.getElementById('userEmail').addEventListener('keypress', e => { if (e.key === 'Enter') goToCategories(); });
 });
+
+// Register service worker for offline support
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/service-worker.js').catch(err => console.log('SW registration failed:', err));
+}
